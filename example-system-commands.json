@@ -1,0 +1,62 @@
+{
+  "rootCommands": [
+    {
+      "name": "List directory",
+      "command": "ls"
+    },
+    {
+      "name": "System information",
+      "command": "uname -a"
+    }
+  ],
+  "categories": {
+    "System Monitor": [
+      {
+        "name": "Process list",
+        "command": "ps aux"
+      },
+      {
+        "name": "Process viewer",
+        "command": "htop"
+      },
+      {
+        "name": "Memory usage",
+        "command": "free -h"
+      }
+    ],
+    "Disk & Storage": [
+      {
+        "name": "Disk usage",
+        "command": "df"
+      },
+      {
+        "name": "Directory size",
+        "command": "du"
+      },
+      {
+        "name": "Disk partitions",
+        "command": "sudo fdisk -l"
+      }
+    ],
+    "Network": [
+      {
+        "name": "Network interfaces",
+        "command": "ip addr"
+      },
+      {
+        "name": "Network connections",
+        "command": "ss -tuln"
+      },
+      {
+        "name": "Network monitor",
+        "command": "sudo nethogs"
+      }
+    ],
+    "Quick Commands": [
+      "history",
+      "whoami",
+      "date",
+      "uptime"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "KPlugin": {
+        "Name": "System Commands",
+        "Description": "Quick access to common system commands",
+        "Version": "23.08"
+    }
+}
