@@ -174,7 +174,7 @@ void SystemCommandsPlugin::createWidgetsForMainWindow(Konsole::MainWindow *mainW
 
 QList<QAction *> SystemCommandsPlugin::menuBarActions(Konsole::MainWindow *mainWindow) const
 {
-    auto *commandsMenu = new QMenu(i18n("Commands"), mainWindow);
+    QList<QAction *> actions;
     
     // Group commands by category
     QMap<QString, QList<SystemCommand>> categorizedCommands;
@@ -188,26 +188,27 @@ QList<QAction *> SystemCommandsPlugin::menuBarActions(Konsole::MainWindow *mainW
         }
     }
     
-    // Add root level commands first
+    // Add root level commands as individual actions
     for (const SystemCommand &cmd : rootCommands) {
         auto *action = new QAction(cmd.name, mainWindow);
         connect(action, &QAction::triggered, this, [this, cmd]() {
             const_cast<SystemCommandsPlugin*>(this)->executeCommand(cmd.command);
         });
-        commandsMenu->addAction(action);
+        actions << action;
     }
     
     // Add separator if we have both root commands and categories
     if (!rootCommands.isEmpty() && !categorizedCommands.isEmpty()) {
-        commandsMenu->addSeparator();
+        actions << new QAction(mainWindow);
+        actions.last()->setSeparator(true);
     }
     
-    // Add categorized commands as submenus
+    // Add each category as a separate top-level menu
     for (auto it = categorizedCommands.begin(); it != categorizedCommands.end(); ++it) {
         const QString &categoryName = it.key();
         const QList<SystemCommand> &categoryCommands = it.value();
         
-        auto *categoryMenu = new QMenu(categoryName, commandsMenu);
+        auto *categoryMenu = new QMenu(categoryName, mainWindow);
         
         for (const SystemCommand &cmd : categoryCommands) {
             auto *action = new QAction(cmd.name, mainWindow);
@@ -217,13 +218,10 @@ QList<QAction *> SystemCommandsPlugin::menuBarActions(Konsole::MainWindow *mainW
             categoryMenu->addAction(action);
         }
         
-        commandsMenu->addMenu(categoryMenu);
+        actions << categoryMenu->menuAction();
     }
     
-    auto *menuAction = commandsMenu->menuAction();
-    menuAction->setText(i18n("Commands"));
-    
-    return {menuAction};
+    return actions;
 }
 
 void SystemCommandsPlugin::activeViewChanged(Konsole::SessionController *controller)
