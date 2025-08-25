@@ -2,7 +2,7 @@
 
 A Konsole terminal emulator plugin that provides quick access to commonly used system administration and monitoring commands through a convenient menu interface.
 
-![System Commands Plugin Screenshot](https://github.com/macsplit/konsole-system-commands-plugin/blob/main/system-commands.png?raw=true)
+![System Commands Plugin Screenshot](system-commands.png)
 
 ## Purpose
 
